@@ -6,15 +6,46 @@ remembers wrong answers, and builds extra practice from those mistakes.
 
 **Live site:** https://george3281.github.io/math-application/
 
-## How to run it
+## Install dependencies
 
-No build step, no dependencies, no server required. Either:
+None. The app is plain HTML, CSS and JavaScript with no packages, so there is
+nothing to `npm install`. The only external resource is the Baloo 2 font from
+Google Fonts, and the app falls back to system fonts without it.
 
-- Open `index.html` directly in a modern browser, or
-- Serve the folder with any static file server, e.g. `python3 -m http.server`
-  from inside `math-application/`, then visit `http://localhost:8000`.
+Optional tools:
+- A modern browser (Chrome, Firefox, Safari, Edge) to run the app.
+- [Node.js](https://nodejs.org) (any recent version) to run the self-check.
 
-Logic self-check: `node test_engine.js` (plain Node, no packages).
+## Run locally
+
+```bash
+git clone https://github.com/george3281/math-application.git
+cd math-application
+python3 -m http.server 8000     # or: npx serve .
+```
+
+Then open http://localhost:8000. You can also double-click `index.html` to
+open it straight from disk.
+
+Run the logic self-check:
+
+```bash
+node test_engine.js             # prints "All engine checks passed."
+```
+
+## Build and deploy
+
+There is no build step. The files in the repo are exactly what the browser
+loads. To deploy on GitHub Pages:
+
+1. Push the repo to GitHub.
+2. Go to **Settings → Pages**, set Source to **Deploy from a branch**, and
+   choose branch `main`, folder `/ (root)`.
+3. The site is published at `https://<user>.github.io/<repo>/` within a
+   minute or two. Each later push to `main` redeploys automatically.
+
+Any other static host (Netlify, Vercel, a web server) works the same way:
+upload the folder as-is.
 
 ## Files
 
