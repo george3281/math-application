@@ -48,5 +48,5 @@
 
 ## Deploy
 - [x] Choose host: GitHub Pages
-- [ ] Deploy and put the live URL in README
-- [ ] Smoke test the live site on desktop and mobile widths
+- [x] Deploy and put the live URL in README
+- [x] Smoke test the live site on desktop and mobile widths
