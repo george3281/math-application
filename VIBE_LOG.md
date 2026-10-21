@@ -92,3 +92,9 @@ anyway and a "fixed" result proved nothing. The second check seeded 20
 history rows so the page was 1725px tall, then confirmed `scrollY` stayed at
 0 both when navigating to every hash and after a reload. Lesson: when a fix
 "works", check that the test could have failed in the first place.
+
+Right after the deploy, the live site briefly showed the Home screen at
+`#stats`. GitHub Pages sends `cache-control: max-age=600`, so the browser had
+paired the new `index.html` with the old cached `app.js`, which looked up the
+removed `#stats` id and crashed. The fix was adding `?v=2` to the asset URLs
+in `index.html`, so a new page always loads matching files.

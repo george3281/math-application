@@ -47,6 +47,10 @@ loads. To deploy on GitHub Pages:
 Any other static host (Netlify, Vercel, a web server) works the same way:
 upload the folder as-is.
 
+GitHub Pages tells browsers to cache files for 10 minutes. When you change
+`app.js`, `engine.js` or `style.css`, bump the `?v=` number on its tag in
+`index.html` so a returning visitor never gets new HTML paired with old JS.
+
 ## Files
 
 | File | What it does |
