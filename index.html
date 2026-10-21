@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Math Buddies</title>
+  <meta name="description" content="Practice addition, subtraction, multiplication and division with fun question cards.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦉</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="#home" class="brand"><span aria-hidden="true">🦉</span> Math Buddies</a>
+    <nav aria-label="Main">
+      <a href="#home" data-nav="home"><span aria-hidden="true">🏠</span> Home</a>
+      <a href="#setup" data-nav="setup"><span aria-hidden="true">🎯</span> Practice</a>
+      <a href="#mistakes" data-nav="mistakes"><span aria-hidden="true">🔁</span> Mistakes</a>
+      <a href="#stats" data-nav="stats"><span aria-hidden="true">📊</span> Stats</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Home -->
+    <section id="home" class="screen">
+      <div class="hero">
+        <div class="mascot" aria-hidden="true">🦉</div>
+        <h1>Hi there, math star!</h1>
+        <p class="lead">Pick a game and let's practice together.</p>
+      </div>
+      <div class="tiles">
+        <a class="tile tile-blue" href="#setup"><span class="tile-emoji" aria-hidden="true">🎯</span><b>Start practice</b><small>Choose your numbers</small></a>
+        <a class="tile tile-pink" href="#mistakes"><span class="tile-emoji" aria-hidden="true">🔁</span><b>Fix my mistakes</b><small id="home-mistakes">No mistakes yet</small></a>
+        <a class="tile tile-green" href="#stats"><span class="tile-emoji" aria-hidden="true">📊</span><b>My stats</b><small id="home-stats">Let's get started!</small></a>
+      </div>
+    </section>
+
+    <!-- Setup -->
+    <section id="setup" class="screen" hidden>
+      <h1>Set up your practice</h1>
+      <form id="setup-form" class="panel">
+        <fieldset>
+          <legend>1. What do you want to practice?</legend>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" name="op" value="add" checked><span>➕ Add</span></label>
+            <label class="chip"><input type="checkbox" name="op" value="sub" checked><span>➖ Subtract</span></label>
+            <label class="chip"><input type="checkbox" name="op" value="mul"><span>✖️ Multiply</span></label>
+            <label class="chip"><input type="checkbox" name="op" value="div"><span>➗ Divide</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>2. How hard?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="level" value="easy" checked><span>🌱 Easy</span></label>
+            <label class="chip"><input type="radio" name="level" value="medium"><span>🌟 Medium</span></label>
+            <label class="chip"><input type="radio" name="level" value="hard"><span>🚀 Hard</span></label>
+          </div>
+          <p class="hint" id="level-hint"></p>
+        </fieldset>
+        <fieldset>
+          <legend>3. How many questions?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="count" value="5"><span>5</span></label>
+            <label class="chip"><input type="radio" name="count" value="10" checked><span>10</span></label>
+            <label class="chip"><input type="radio" name="count" value="20"><span>20</span></label>
+          </div>
+        </fieldset>
+        <p class="error" id="setup-error" role="alert"></p>
+        <button class="btn btn-big btn-go" type="submit">Let's go! <span aria-hidden="true">🚀</span></button>
+      </form>
+    </section>
+
+    <!-- Play -->
+    <section id="play" class="screen" hidden>
+      <div class="play-head">
+        <p class="play-title" id="play-title"></p>
+        <div class="progress" role="progressbar" aria-label="Session progress" aria-valuemin="0" id="progress">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="counters" aria-live="polite">
+          <span>Question <b id="c-num">1</b> of <b id="c-total">10</b></span>
+          <span class="good">✅ <b id="c-correct">0</b></span>
+          <span class="bad">❌ <b id="c-wrong">0</b></span>
+        </div>
+      </div>
+
+      <div class="card" id="card">
+        <div class="card-inner">
+          <div class="face front" id="front">
+            <p class="op-tag" id="op-tag"></p>
+            <p class="question" id="question"></p>
+            <div class="choices" id="choices"></div>
+            <button class="btn btn-reveal" id="reveal" type="button">Show answer <span aria-hidden="true">👀</span></button>
+          </div>
+          <div class="face back" id="back" inert>
+            <p class="op-tag">The answer is</p>
+            <p class="question" id="answer-text"></p>
+            <p class="picked" id="picked"></p>
+            <p class="ask">Did you get it right?</p>
+            <div class="judge">
+              <button class="btn btn-right" id="btn-right" type="button">I got it right <span aria-hidden="true">✅</span></button>
+              <button class="btn btn-wrong" id="btn-wrong" type="button">I got it wrong <span aria-hidden="true">❌</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="feedback" id="feedback" aria-live="assertive"></p>
+      <div class="confetti" id="confetti" aria-hidden="true"></div>
+    </section>
+
+    <!-- Summary -->
+    <section id="summary" class="screen" hidden>
+      <div class="panel center">
+        <div class="stars" id="sum-stars" aria-hidden="true"></div>
+        <h1 id="sum-title"></h1>
+        <p class="lead" id="sum-score"></p>
+        <div class="stat-row">
+          <div class="stat"><b id="sum-attempted"></b><span>Tried</span></div>
+          <div class="stat good"><b id="sum-correct"></b><span>Right</span></div>
+          <div class="stat bad"><b id="sum-wrong"></b><span>Wrong</span></div>
+          <div class="stat"><b id="sum-acc"></b><span>Accuracy</span></div>
+        </div>
+        <div id="sum-missed-wrap">
+          <h2>Let's remember these</h2>
+          <ul class="missed" id="sum-missed"></ul>
+        </div>
+        <div class="actions">
+          <button class="btn btn-go" id="again" type="button">Play again <span aria-hidden="true">🔄</span></button>
+          <button class="btn btn-pink" id="sum-review" type="button">Practice my mistakes <span aria-hidden="true">🔁</span></button>
+          <a class="btn btn-plain" href="#home">Home</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mistakes -->
+    <section id="mistakes" class="screen" hidden>
+      <h1>Mistakes to fix</h1>
+      <p class="lead">Answer each one right <b>2 times in a row</b> to clear it. You'll also get similar questions for extra practice!</p>
+      <div class="panel">
+        <p class="empty" id="mis-empty">No mistakes right now. Amazing! <span aria-hidden="true">🎉</span></p>
+        <ul class="missed" id="mis-list"></ul>
+        <button class="btn btn-big btn-pink" id="mis-practice" type="button">Practice my mistakes <span aria-hidden="true">💪</span></button>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section id="stats" class="screen" hidden>
+      <h1>My stats</h1>
+      <div class="stat-row">
+        <div class="stat"><b id="st-attempted">0</b><span>Questions tried</span></div>
+        <div class="stat good"><b id="st-correct">0</b><span>Right</span></div>
+        <div class="stat bad"><b id="st-wrong">0</b><span>Wrong</span></div>
+        <div class="stat"><b id="st-acc">0%</b><span>Accuracy</span></div>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <h2>By operation</h2>
+          <div class="bars" id="st-ops"></div>
+        </div>
+        <div class="panel">
+          <h2>By level</h2>
+          <div class="bars" id="st-levels"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Practice history</h2>
+        <p class="empty" id="hist-empty">No sessions yet. Finish a practice to see it here!</p>
+        <div class="table-wrap">
+          <table class="history" id="hist-table">
+            <thead><tr><th>When</th><th>Practice</th><th>Level</th><th>Score</th></tr></thead>
+            <tbody id="hist-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="center">
+        <button class="btn btn-danger" id="reset" type="button">Reset all data</button>
+        <p class="hint" id="storage-note"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
