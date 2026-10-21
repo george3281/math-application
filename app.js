@@ -48,7 +48,7 @@
     if (name === "play" && !session) name = "setup";
     if (name === "summary" && !lastSession) name = "home";
     if (("#" + name) !== location.hash && location.hash) history.replaceState(null, "", "#" + name);
-    for (const s of SCREENS) $(s).hidden = s !== name;
+    for (const s of SCREENS) $("screen-" + s).hidden = s !== name;
     document.querySelectorAll("[data-nav]").forEach((a) => {
       const active = a.dataset.nav === name || (name === "play" && a.dataset.nav === "setup");
       if (active) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");

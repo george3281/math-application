@@ -64,13 +64,31 @@ After the Node tests passed, it drove the real page in Chrome: played a
 session, reloaded, and checked every screen at phone width.
 
 **What I accepted or changed:**
-That found two issues the unit tests couldn't. (1) After a reload on #stats,
-the browser restored the old scroll position and cut off the heading, which
-`history.scrollRestoration = "manual"` fixed. (2) At 375px the nav wrapped
-onto two lines, which tighter nav padding on small screens fixed. Resizing
-the browser window didn't work in automation, so mobile width was tested by
-loading the app in a 375px iframe and checking `scrollWidth` on every screen.
+That found two issues the unit tests couldn't. (1) The Stats page opened
+scrolled down, with the "My stats" heading hidden under the sticky header.
+(2) At 375px the nav wrapped onto two lines, which tighter nav padding on
+small screens fixed. Resizing the browser window didn't work in automation,
+so mobile width was tested by loading the app in a 375px iframe and checking
+`scrollWidth` on every screen.
+
+## Interaction 5 - The first fix for the scroll bug was wrong
+
+**AI suggestion:**
+For bug (1), the agent first blamed browser scroll restoration after a reload
+and added `history.scrollRestoration = "manual"`. The heading looked fine
+afterwards, so the bug seemed fixed.
+
+**What I accepted or changed:**
+While taking screenshots of the deployed site for this report, the same bug
+appeared again on #stats, this time without a reload. The real cause: each
+screen was a `<section id="stats">` and the URL hash was `#stats`, so the
+browser treated the hash as an anchor and scrolled to that section. The fix
+was renaming the sections to `id="screen-stats"` etc. so the hash no longer
+matches any element.
 
 **What I learned / how I verified it:**
-Unit tests cover the logic, but layout and navigation bugs only show up on
-the real page. Both fixes were re-checked in the same iframe setup.
+The first test was too weak. The page was nearly empty, so it couldn't scroll
+anyway and a "fixed" result proved nothing. The second check seeded 20
+history rows so the page was 1725px tall, then confirmed `scrollY` stayed at
+0 both when navigating to every hash and after a reload. Lesson: when a fix
+"works", check that the test could have failed in the first place.
