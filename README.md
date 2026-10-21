@@ -4,7 +4,7 @@ A static web app where children ages 7-12 practice addition, subtraction,
 multiplication and division with interactive flip cards. It tracks results,
 remembers wrong answers, and builds extra practice from those mistakes.
 
-**Live site:** _TBD (GitHub Pages URL)_
+**Live site:** https://george3281.github.io/math-application/
 
 ## How to run it
 

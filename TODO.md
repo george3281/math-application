@@ -28,7 +28,7 @@
 - [x] Save every incorrect question (operands, operation, difficulty, times missed)
 - [x] Mistakes page: list missed questions with the correct answers
 - [x] "Practice mistakes" session: the missed questions plus similar ones (same operation, nearby operands)
-- [x] Remove a mistake after it has been answered correctly twice in a row in review
+- [x] Remove a mistake after it has been answered correctly twice in a row
 
 ## E. Statistics
 - [x] Total attempted, correct, incorrect, overall accuracy
